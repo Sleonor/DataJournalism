@@ -32,7 +32,15 @@ var svg = d3
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
+// Add tooltip
+var tooltip = d3.select("body")
+	.append("div")
+	.style("position", "absolute")
+	.style("z-index", "10")
+	.style("visibility", "hidden")
+    .text("a simple tooltip");
 
+    
 // Load data from hours-of-tv-watched.csv
 d3.csv("data.csv", function(error, latinoData) {
 
@@ -42,7 +50,54 @@ d3.csv("data.csv", function(error, latinoData) {
     // Print the tvData
     console.log(latinoData);
     console.log(latinoData.length)
-    // Cast the hours value to a number for each piece of tvData
-    // latinoData.forEach(function(data) {
-    //   data.hours = +data.hours;
+
+    // Create code to build the bar chart using the tvData.
+    var x = d3.scale.linear()
+              .domain([0, d3.max(data, function(d) { return d[0]; })])
+              .range([ 0, width ]);
+    
+    var y = d3.scale.linear()
+    	      .domain([0, d3.max(data, function(d) { return d[1]; })])
+    	      .range([ height, 0 ]);
+ 
+    var chart = d3.select('body')
+	.append('svg:svg')
+	.attr('width', width + margin.right + margin.left)
+	.attr('height', height + margin.top + margin.bottom)
+	.attr('class', 'chart')
+
+    var main = chart.append('g')
+	.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+	.attr('width', width)
+	.attr('height', height)
+	.attr('class', 'main')   
+        
+    // draw the x axis
+    var xAxis = d3.svg.axis()
+	.scale(x)
+	.orient('bottom');
+
+    main.append('g')
+	.attr('transform', 'translate(0,' + height + ')')
+	.attr('class', 'main axis date')
+	.call(xAxis);
+
+    // draw the y axis
+    var yAxis = d3.svg.axis()
+	.scale(y)
+	.orient('left');
+
+    main.append('g')
+	.attr('transform', 'translate(0,0)')
+	.attr('class', 'main axis date')
+	.call(yAxis);
+
+    var g = main.append("svg:g"); 
+    
+    g.selectAll("scatter-dots")
+      .data(data)
+      .enter().append("svg:circle")
+          .attr("cx", function (d,i) { return x(d[0]); } )
+          .attr("cy", function (d) { return y(d[1]); } )
+          .attr("r", 8);
     });
