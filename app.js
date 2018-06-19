@@ -43,34 +43,60 @@ var tooltip = d3.select("body")
     
 // Load data from hours-of-tv-watched.csv
 d3.csv("data.csv", function(error, latinoData) {
-
-    // Log an error if one exists
-    if (error) return console.warn(error);
+    if (error) throw (error);
   
-    // Print the tvData
+    // Print the latinoData
     console.log(latinoData);
     console.log(latinoData.length)
 
-    // Create code to build the bar chart using the tvData.
-    var x = d3.scale.linear()
-              .domain([0, d3.max(data, function(d) { return d[0]; })])
-              .range([ 0, width ]);
-    
-    var y = d3.scale.linear()
-    	      .domain([0, d3.max(data, function(d) { return d[1]; })])
-    	      .range([ height, 0 ]);
- 
-    var chart = d3.select('body')
-	.append('svg:svg')
-	.attr('width', width + margin.right + margin.left)
-	.attr('height', height + margin.top + margin.bottom)
-	.attr('class', 'chart')
 
-    var main = chart.append('g')
-	.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-	.attr('width', width)
-	.attr('height', height)
-	.attr('class', 'main')   
+
+    // Format the data
+    latinoData.forEach(function(data) {
+        // turn each data set into int
+        data.unemploymentLatino = +data.unemploymentLatino; 
+        data.povertyLatino = +data.povertyLatino; 
+        data.rateLatino = +data.rateLatino; 
+        data.healthStatus = +data.healthStatus; 
+        data.depression = +data.depression; 
+        data.lackingHealthCare = +data.lackingHealthCare; 
+    });
+
+    // Step 5: Create the scales for the chart
+    // =================================
+    var xLinearScale = d3.scaleLinear().range([height, 0]);
+
+    var yLinearScale = d3.scaleLinear().range([height, 0]);
+
+    // Set max values for scales
+    var xMax = 30;
+    var yMax = 30;
+    
+    // Use the yMax value to set the yLinearScale domain
+    yLinearScale.domain([0, yMax]);
+
+     // Step 7: Create the axes
+    // =================================
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    var leftAxis = d3.axisLeft(yLinearScale);
+      
+    // Step 8: Append the axes to the chartGroup
+    // ==============================================
+    // Add x-axis
+    chartGroup.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(bottomAxis);
+
+    // Add y-axis
+    chartGroup.append("g").call(leftAxis);
+    
+    // STEP 9: Set up scatter generator for each set of data and append 3 svg paths
+    // ========================
+
+    // scatter generator for first set
+    var scatter1= 
+
+ 
         
     // draw the x axis
     var xAxis = d3.svg.axis()
