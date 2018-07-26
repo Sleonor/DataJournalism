@@ -1,53 +1,53 @@
-﻿state,unemploymentLatino,lackingHealthCare
-Alabama,6.6,13.9
-Alaska,7,15
-Arizona,8.6,14.4
-Arkansas,4.9,16.3
-California,9.8,14.8
-Colorado,7.1,12.8
-Connecticut,11.8,8.7
-Delaware,5.7,8.7
-District of Columbia,5.8,8.3
-Florida,7.9,17.6
-Georgia,6.8,20.9
-Hawaii,7.1,8.1
-Idaho,7.6,16.5
-Illinois,8.8,11.9
-Indiana,7.3,14.8
-Iowa,8,7.7
-Kansas,7.6,14.5
-Kentucky,7.7,10
-Louisiana,7.3,18.7
-Maine,2,11
-Maryland,7.6,9.2
-Massachusetts,11.6,4.6
-Michigan,10.1,10.3
-Minnesota,8.2,7.3
-Mississippi,11.8,18.8
-Missouri,7,12.9
-Montana,4.7,12.9
-Nebraska,8.1,12.4
-Nevada,8.9,17.1
-New Hampshire,10,11.4
-New Jersey,8.1,12.5
-New Mexico,9.6,15.4
-New York,9,12.3
-North Carolina,8.2,16.1
-North Dakota,N,8.8
-Ohio,9.8,10.2
-Oklahoma,5.6,13.9
-Oregon,10.4,11
-Pennsylvania,12.8,10.1
-Rhode Island,11.8,8
-South Carolina,6.7,17.1
-South Dakota,6,9.9
-Tennessee,7.7,14.2
-Texas,6.6,24.9
-Utah,6.8,13.9
-Vermont,6.2,6.7
-Virginia,6,13.1
-Washington,7.3,10.7
-West Virginia,12.2,10.1
-Wisconsin,7.4,8.5
-Wyoming,4.5,15.1
-Puerto Rico,18.6,6
+﻿state,unemploymentLatino,lackingHealthCare,abbr
+Alabama,6.6,13.9,AK
+Alaska,7,15,AL
+Arizona,8.6,14.4,AR
+Arkansas,4.9,16.3,AZ
+California,9.8,14.8,CA
+Colorado,7.1,12.8,CO
+Connecticut,11.8,8.7,CT
+Delaware,5.7,8.7,DC
+District of Columbia,5.8,8.3,DE
+Florida,7.9,17.6,FL
+Georgia,6.8,20.9,GA
+Hawaii,7.1,8.1,HI
+Idaho,7.6,16.5,IA
+Illinois,8.8,11.9,ID
+Indiana,7.3,14.8,IL
+Iowa,8,7.7,IN
+Kansas,7.6,14.5,KS
+Kentucky,7.7,10,KY
+Louisiana,7.3,18.7,LA
+Maine,2,11,MA
+Maryland,7.6,9.2,MD
+Massachusetts,11.6,4.6,ME
+Michigan,10.1,10.3,MI
+Minnesota,8.2,7.3,MN
+Mississippi,11.8,18.8,MO
+Missouri,7,12.9,MS
+Montana,4.7,12.9,MT
+Nebraska,8.1,12.4,NC
+Nevada,8.9,17.1,ND
+New Hampshire,10,11.4,NE
+New Jersey,8.1,12.5,NH
+New Mexico,9.6,15.4,NJ
+New York,9,12.3,NM
+North Carolina,8.2,16.1,NV
+North Dakota,N,8.8,NY
+Ohio,9.8,10.2,OH
+Oklahoma,5.6,13.9,OK
+Oregon,10.4,11,OR
+Pennsylvania,12.8,10.1,PA
+Rhode Island,11.8,8,RI
+South Carolina,6.7,17.1,SC
+South Dakota,6,9.9,SD
+Tennessee,7.7,14.2,TN
+Texas,6.6,24.9,TX
+Utah,6.8,13.9,UT
+Vermont,6.2,6.7,VA
+Virginia,6,13.1,VT
+Washington,7.3,10.7,WA
+West Virginia,12.2,10.1,WI
+Wisconsin,7.4,8.5,WV
+Wyoming,4.5,15.1,WY
+Puerto Rico,18.6,6,
