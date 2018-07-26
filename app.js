@@ -92,11 +92,11 @@ d3.csv("data.csv", function (err, newsData) {
         .attr("x", 0-height/2)
         .attr("dy", "1em")
         .attr("class", "axis-text")
-        .text("Has Diabetes (%)");
+        .text("Lacking Health Care (%)");
     
     chartGroup.append("text")
         .attr("transform", "translate(" + width/2 + " ," + (height + margin.top + 20) + ")"
         )
         .attr("class", "axis-text")
-        .text("In Poverty (%)");
+        .text("Unemployment (%)");
 });
