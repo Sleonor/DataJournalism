@@ -1,129 +1,102 @@
-// D3 Scatterplot Assignment
+var svgWidth = 800;
+var svgHeight = 500;
 
-// Students:
-// =========
-// Follow your written instructions and create a scatter plot with D3.js.
-
-// define svg area dimesnions
-var svgWidth = 960;
-var svgHeight = 660;
-
-// define the chart's margins as an object
-var chartMargin = {
+var margin = {
     top: 30,
-    right: 30,
-    bottom: 30,
-    left: 30
-  };
+    right: 40,
+    bottom: 60,
+    left: 100
+};
 
-// define the dimensions of the chart area
-var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
-var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
+var width = svgWidth - margin.left - margin.right;
+var height = svgHeight - margin.top - margin.bottom;
 
-// Select body, append are to it, and set the dimensions
-var svg = d3
-  .select("body")
-  .append("svg")
-  .attr("height", svgHeight)
-  .attr("width", svgWidth);
+// Create an SVG wrapper and append an SVG group that will hold the chart
+var svg = d3.select(".chart")
+    .append("svg")
+    .attr("width", svgWidth)
+    .attr("height", svgHeight)
 
-// Append a group to the SVG area and shift ('translate') it to the right and down to adhere
-// to the margins set in the "chartMargin" object.
 var chartGroup = svg.append("g")
-  .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-// Add tooltip
-var tooltip = d3.select("body")
-	.append("div")
-	.style("position", "absolute")
-	.style("z-index", "10")
-	.style("visibility", "hidden")
-    .text("a simple tooltip");
-
-    
-// Load data from hours-of-tv-watched.csv
-d3.csv("data.csv", function(error, latinoData) {
-    if (error) throw (error);
-  
-    // Print the latinoData
-    console.log(latinoData);
-    console.log(latinoData.length)
-
-
-
-    // Format the data
-    latinoData.forEach(function(data) {
-        // turn each data set into int
-        data.unemploymentLatino = +data.unemploymentLatino; 
-        data.povertyLatino = +data.povertyLatino; 
-        data.rateLatino = +data.rateLatino; 
-        data.healthStatus = +data.healthStatus; 
-        data.depression = +data.depression; 
-        data.lackingHealthCare = +data.lackingHealthCare; 
+// Import data
+d3.csv("data.csv", function (err, newsData) {
+    if (err) throw err;
+    newsData.forEach(function (data) {
+        data.unemploymentLatino = +data.unemploymentLatino;
+        data.lackingHealthCare = +data.lackingHealthCare;
     });
-
-    // Step 5: Create the scales for the chart
-    // =================================
-    var xLinearScale = d3.scaleLinear().range([height, 0]);
-
-    var yLinearScale = d3.scaleLinear().range([height, 0]);
-
-    // Set max values for scales
-    var xMax = 30;
-    var yMax = 30;
     
-    // Use the yMax value to set the yLinearScale domain
-    yLinearScale.domain([0, yMax]);
-
-     // Step 7: Create the axes
-    // =================================
+    // Create scale functions
+    var xLinearScale = d3.scaleLinear()
+        .domain([0, d3.max(newsData, d => d.unemploymentLatino)])
+        .range([0, width]);
+    
+    var yLinearScale = d3.scaleLinear()
+        .domain([0, d3.max(newsData, d => d.lackingHealthCare) + 0.9])
+        .range([height, 0]);
+    
+    // Create axis functions
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
-      
-    // Step 8: Append the axes to the chartGroup
-    // ==============================================
-    // Add x-axis
+    
+    // Append axes to chart
     chartGroup.append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(bottomAxis);
-
-    // Add y-axis
-    chartGroup.append("g").call(leftAxis);
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
     
-    // STEP 9: Set up scatter generator for each set of data and append 3 svg paths
-    // ========================
-
-    // scatter generator for first set
-    var scatter1= 
-
- 
+    chartGroup.append("g")
+        .call(leftAxis);
+    
+    // Create circles
+    var circlesGroup = chartGroup.selectAll("circle")
+        .data(newsData)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xLinearScale(d.unemploymentLatino))
+        .attr("cy", d => yLinearScale(d.lackingHealthCare))
+        .attr("r", "10")
+        .attr("fill", "brown")
+        .attr("opacity", ".5");
+    
+    // Add text to circles
+    chartGroup.append("text")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")
+        .selectAll("tspan")
+        .data(newsData)
+        .enter()
+        .append("tspan")
+            .attr("x", function(data) {
+                return xLinearScale(data.unemploymentLatino - 0);
+            })
+            .attr("y", function(data) {
+                return yLinearScale(data.lackingHealthCare - 0.1);
+            })
+            .text(function(data) {
+                return data.abbr
+            });
+    
+    // Create axes labels
+    chartGroup.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
         
-    // draw the x axis
-    var xAxis = d3.svg.axis()
-	.scale(x)
-	.orient('bottom');
-
-    main.append('g')
-	.attr('transform', 'translate(0,' + height + ')')
-	.attr('class', 'main axis date')
-	.call(xAxis);
-
-    // draw the y axis
-    var yAxis = d3.svg.axis()
-	.scale(y)
-	.orient('left');
-
-    main.append('g')
-	.attr('transform', 'translate(0,0)')
-	.attr('class', 'main axis date')
-	.call(yAxis);
-
-    var g = main.append("svg:g"); 
+    chartGroup.append("g")
+        .call(leftAxis);
     
-    g.selectAll("scatter-dots")
-      .data(data)
-      .enter().append("svg:circle")
-          .attr("cx", function (d,i) { return x(d[0]); } )
-          .attr("cy", function (d) { return y(d[1]); } )
-          .attr("r", 8);
-    });
+    chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0-margin.left + 40)
+        .attr("x", 0-height/2)
+        .attr("dy", "1em")
+        .attr("class", "axis-text")
+        .text("Has Diabetes (%)");
+    
+    chartGroup.append("text")
+        .attr("transform", "translate(" + width/2 + " ," + (height + margin.top + 20) + ")"
+        )
+        .attr("class", "axis-text")
+        .text("In Poverty (%)");
+});
